@@ -78,7 +78,7 @@ function card_container(data){
         viewMore.setAttribute("class","btn btn-warning");
         viewMore.setAttribute("style","width:100%;");
         viewMore.addEventListener("click", ()=>{
-            
+
         });
         cardDiv.appendChild(viewMore);
         rowDiv.appendChild(col);
@@ -101,14 +101,13 @@ function footer(){
     let foot = document.getElementById("foot");
     let footContainer = document.createElement("div");
     footContainer.setAttribute("style","width:100%; height:100px; background-color: #272838; color:white;");
-    footContainer.setAttribute("class","mt-5 d-flex justify-content-center align-items-center gap-2 fs-4");
+    footContainer.setAttribute("class","mt-5 d-flex justify-content-center align-items-center gap-2 fs-4 btn");
     footContainer.innerHTML = 'Follow us:-<i class="bi-whatsapp"></i>'+'<i class="bi-facebook"></i>'+'<i class="bi-instagram"></i>'+'<i class="bi-linkedin"></i>'+'<i class="bi-twitter"></i>';
     foot.appendChild(footContainer);
 
     let bottomFoot = document.createElement("div");
     bottomFoot.setAttribute("style","width:100%; height: 40px; background-color:rgb(16, 16, 17); color:white;");
     bottomFoot.setAttribute("class","d-flex justify-content-center align-items-center");
-    bottomFoot.innerHTML = "Copyright &copy2025 Designed By JATEEN"
-;    foot.appendChild(bottomFoot);
-    
+    bottomFoot.innerHTML = "Copyright &copy2025 Designed By JATEEN";
+    foot.appendChild(bottomFoot);  
 }
