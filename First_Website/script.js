@@ -40,9 +40,71 @@ function headerComponent(){
     let signUp = document.createElement("small");
     signUp.innerText = "Sign Up";
     signUp.setAttribute("class","text-white fw-bold btn bi bi-person-fill");
+    signUp.addEventListener("click",()=>{
+        signUpPage();
+    });
     signBtns.appendChild(signUp);
     head.appendChild(signBtns);
     /*---------------------------Header Completed----------------------*/
+}
+function signUpPage(){
+    let main = document.getElementById("main");
+    main.innerText = "";
+    main.setAttribute("class","d-flex justify-content-center align-items-center");
+    main.setAttribute("style","min-height:400;");
+    let form = document.createElement("div");
+    form.setAttribute("style","box-shadow:10px 10px 15px grey; width:30%; margin-top:50px; padding:20px; margin-bottom:100px;");
+
+    let nameLabel = document.createElement("label");
+    nameLabel.innerHTML = "<b>*Enter Name:</b>"
+    form.appendChild(nameLabel);
+    let name = document.createElement("input");
+    name.setAttribute("class","form-control text-black");
+    name.setAttribute("type","text");
+    name.setAttribute("placeholder","Enter name");
+    form.appendChild(name);
+    
+    let emailLabel = document.createElement("label");
+    emailLabel.innerHTML = "<b>*Enter Email ID:</b>"
+    emailLabel.setAttribute("class","mt-2");
+    form.appendChild(emailLabel);
+    let email = document.createElement("input");
+    email.setAttribute("id","emailID");
+    email.setAttribute("type","email");
+    email.setAttribute("class","form-control text-black");
+    email.setAttribute("placeholder","Enter Email address");
+    form.appendChild(email);
+
+    let passwordLabel = document.createElement("label");
+    passwordLabel.innerHTML = "<b>*Enter Password:</b>"
+    passwordLabel.setAttribute("class","mt-2");
+    form.appendChild(passwordLabel);
+    let password = document.createElement("input");
+    password.setAttribute("placeholder","Enter Password");
+    password.setAttribute("class","form-control text-black");
+    password.setAttribute("type","password");
+    form.appendChild(password);
+
+    let mobileLabel = document.createElement("label");
+    mobileLabel.innerHTML = "<b>*Enter Mobile no.:</b>"
+    mobileLabel.setAttribute("class","mt-2");
+    form.appendChild(mobileLabel);
+    let mobile = document.createElement("input");
+    mobile.setAttribute("type","text");
+    mobile.setAttribute("placeholder","Enter mobile number");
+    mobile.setAttribute("class","form-control text-black");
+    form.appendChild(mobile);
+
+    let submit = document.createElement("button");
+    submit.innerHTML = "<b>Submit</b>"
+    submit.setAttribute("type","submit");
+    submit.setAttribute("class","btn btn-primary mt-2");
+    submit.setAttribute("style","width:100%;");
+    submit.addEventListener("click",()=>{
+        window.alert("SignUp Successful");
+    });
+    form.appendChild(submit);
+    main.appendChild(form);
 }
 function card_container(data){
     let main = document.getElementById("main");
@@ -96,7 +158,7 @@ function viewMoreComponent(product){
 
     let leftDiv = document.createElement("div");
     leftDiv.setAttribute("class","col-md-6 d-flex flex-column");
-    leftDiv.setAttribute("style","height: 550px; box-shadow: 10px 10px 10px grey; background-color: #F6B9AD; border-radius:20px;");
+    leftDiv.setAttribute("style","height: 550px; box-shadow: 10px 10px 15px grey; background-color: #F6B9AD; border-radius:20px;");
     viewMore.appendChild(leftDiv);
 
     let mainImage = document.createElement("img");
@@ -121,7 +183,7 @@ function viewMoreComponent(product){
 
     let rightDiv = document.createElement("div");
     rightDiv.setAttribute("class","col-md-6 d-flex flex-column p-4 pl-2 pr-2");
-    rightDiv.setAttribute("style","height: 550px; box-shadow: 10px 10px 10px grey; border-radius:20px;");
+    rightDiv.setAttribute("style","height: 550px; box-shadow: 10px 10px 15px grey; border-radius:20px;");
     viewMore.appendChild(rightDiv);
 
     let pTitle = document.createElement("h4");
