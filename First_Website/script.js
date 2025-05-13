@@ -59,11 +59,17 @@ function signUpPage(){
     nameLabel.innerHTML = "<b>*Enter Name:</b>"
     form.appendChild(nameLabel);
     let name = document.createElement("input");
-    name.setAttribute("class","form-control text-black");
+    name.setAttribute("id","userName");
     name.setAttribute("type","text");
+    name.setAttribute("onkeyup","usernameVerification()");
+    name.setAttribute("class","form-control text-black");
     name.setAttribute("placeholder","Enter name");
     form.appendChild(name);
-    
+    let nameError = document.createElement("small");
+    nameError.setAttribute("style","color:red;");
+    nameError.setAttribute("id","nameerror");
+    form.appendChild(nameError);
+
     let emailLabel = document.createElement("label");
     emailLabel.innerHTML = "<b>*Enter Email ID:</b>"
     emailLabel.setAttribute("class","mt-2");
@@ -71,9 +77,14 @@ function signUpPage(){
     let email = document.createElement("input");
     email.setAttribute("id","emailID");
     email.setAttribute("type","email");
+    email.setAttribute("onkeyup","emailVerification()");
     email.setAttribute("class","form-control text-black");
     email.setAttribute("placeholder","Enter Email address");
     form.appendChild(email);
+    let emailError = document.createElement("small");
+    emailError.setAttribute("style","color:red;");
+    emailError.setAttribute("id","emailerror");
+    form.appendChild(emailError);
 
     let passwordLabel = document.createElement("label");
     passwordLabel.innerHTML = "<b>*Enter Password:</b>"
@@ -100,11 +111,79 @@ function signUpPage(){
     submit.setAttribute("type","submit");
     submit.setAttribute("class","btn btn-primary mt-2");
     submit.setAttribute("style","width:100%;");
+    submit.setAttribute("onclick","return checkUser()");
     submit.addEventListener("click",()=>{
-        window.alert("SignUp Successful");
+        let username = verified();
+        if(username) username = name.value;
+        let emailID = verified();
+        if(emailID) emailID = email.value;
+        let psswrd = verified();
+        if(psswrd) psswrd = password.value;
+        let mob = verified();
+        if(mob) mob = mobile.value;
+        if(username==false || emailID==false || psswrd==false || mob==false){
+            window.alert("SignUp Unsuccessful");
+        }else{
+            let userList = JSON.parse(localStorage.getItem("user-list"));
+            let newUser = {username,emailID,psswrd,mob};
+            userList.push(newUser);
+            localStorage.setItem("user-list",JSON.stringify(userList));
+            window.alert("SignUp Successful");
+        }
     });
     form.appendChild(submit);
     main.appendChild(form);
+}
+function usernameVerification(){
+    let userStatus = true;
+    let username = document.getElementById("userName").value;
+    let nameError = document.getElementById("nameerror");
+    if(username.length == 0){
+        nameError.innerHTML = "*Please Provide Username<br>";
+        userStatus = false;
+    }else nameError.innerText="";
+    return userStatus;  
+}
+function emailVerification(){
+    let emailStatus = true;
+    let email = document.getElementById("emailID").value;
+    let emailError = document.getElementById("emailerror");
+    let atTheRate = 0;
+    if(email.length == 0){
+        emailError.innerHTML="*Please Provide Valid Email<br>";
+        emailStatus = false;
+    }else{
+        for(let i=0;i<email.length; i++){
+            if(email.charAt(i)=="@") atTheRate++;
+        }
+        if(atTheRate!=1){
+            if(atTheRate==0) {
+                emailError.innerHTML = "*Please Provide at least 1 \'@\' in your email<br>";
+                emailStatus = false;
+            }
+            else if(atTheRate>1){
+                emailError.innerHTML = "*Only 1 \'@\' allowed<br>";
+                emailStatus = false;
+            }
+        }
+        else if(!email.endsWith(".com") && !email.endsWith(".in") && !email.endsWith(".net")){
+            emailError.innerHTML = "*Only .com, .in and .net extensions allowed";
+            emailStatus = false;
+        }
+        else{
+            emailError.innerText = "";
+        }
+    }
+    return emailStatus;
+}
+function verified(){
+    let user = usernameVerification();
+    let email = emailVerification();
+    if(user && email) return true;
+    return false;
+}
+function checkUser(){
+    (!localStorage.getItem("user-list") && localStorage.setItem("user-list","[]"));
 }
 function card_container(data){
     let main = document.getElementById("main");
