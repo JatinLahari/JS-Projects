@@ -1,3 +1,6 @@
+function checkUser(){
+    (!localStorage.getItem("user-list") && localStorage.setItem("user-list","[]"));
+}
 function headerComponent(){
     let head = document.getElementById("header");
     head.setAttribute("style","min-height: 50px;");
@@ -53,8 +56,9 @@ function signUpPage(){
     main.setAttribute("class","d-flex justify-content-center align-items-center");
     main.setAttribute("style","min-height:400;");
     let form = document.createElement("div");
-    form.setAttribute("style","box-shadow:10px 10px 15px grey; width:30%; margin-top:50px; padding:20px; margin-bottom:100px;");
+    form.setAttribute("style","box-shadow:0px 0px 20px 5px grey; width:30%; margin-top:50px; padding:20px; margin-bottom:100px;");
 
+    // name input
     let nameLabel = document.createElement("label");
     nameLabel.innerHTML = "<b>*Enter Name:</b>"
     form.appendChild(nameLabel);
@@ -70,6 +74,7 @@ function signUpPage(){
     nameError.setAttribute("id","nameerror");
     form.appendChild(nameError);
 
+    // email input
     let emailLabel = document.createElement("label");
     emailLabel.innerHTML = "<b>*Enter Email ID:</b>"
     emailLabel.setAttribute("class","mt-2");
@@ -86,26 +91,41 @@ function signUpPage(){
     emailError.setAttribute("id","emailerror");
     form.appendChild(emailError);
 
+    // password input
     let passwordLabel = document.createElement("label");
     passwordLabel.innerHTML = "<b>*Enter Password:</b>"
     passwordLabel.setAttribute("class","mt-2");
     form.appendChild(passwordLabel);
     let password = document.createElement("input");
-    password.setAttribute("placeholder","Enter Password");
-    password.setAttribute("class","form-control text-black");
+    password.setAttribute("id","password");
     password.setAttribute("type","password");
+    password.setAttribute("onkeyup","passwordVerification()");
+    password.setAttribute("class","form-control text-black");
+    password.setAttribute("placeholder","Enter Password");
     form.appendChild(password);
+     let passwordError = document.createElement("small");
+    passwordError.setAttribute("style","color:red;");
+    passwordError.setAttribute("id","passworderror");
+    form.appendChild(passwordError);
 
+    // mobile input
     let mobileLabel = document.createElement("label");
     mobileLabel.innerHTML = "<b>*Enter Mobile no.:</b>"
     mobileLabel.setAttribute("class","mt-2");
     form.appendChild(mobileLabel);
     let mobile = document.createElement("input");
+    mobile.setAttribute("id","mobileNo");
     mobile.setAttribute("type","text");
-    mobile.setAttribute("placeholder","Enter mobile number");
+    mobile.setAttribute("onkeyup","mobileVerification()");  
     mobile.setAttribute("class","form-control text-black");
+    mobile.setAttribute("placeholder","Enter mobile number");
     form.appendChild(mobile);
+    let mobileError = document.createElement("small");
+    mobileError.setAttribute("id","mobileerror");
+    mobileError.setAttribute("style","color:red;")
+    form.appendChild(mobileError);
 
+    // submit button
     let submit = document.createElement("button");
     submit.innerHTML = "<b>Submit</b>"
     submit.setAttribute("type","submit");
@@ -134,6 +154,49 @@ function signUpPage(){
     form.appendChild(submit);
     main.appendChild(form);
 }
+// Mobile number verification
+function mobileVerification(){
+    let mobStatus = true;
+    let mobile = document.getElementById("mobileNo").value;
+    let mobileError = document.getElementById("mobileerror");
+    if(mobile.length==0){
+        mobileError.innerHTML="*Please Provide Mobile no.<br>"
+        mobStatus = false;
+    }
+    else if(mobile.length!=10){
+        mobileError.innerHTML="*Enter 10 digit mobile number<br>"
+        mobStatus = false;
+    }
+    else if(isNaN(mobile)){
+        mobileError.innerHTML="*Only digits are allowed<br>";
+        mobStatus = false;
+    }
+    else{
+        mobileError.innerText = "";
+    }
+    return mobStatus;
+}
+// password verification
+function passwordVerification(){
+    let passStatus = true;
+    let password = document.getElementById("password").value;
+    let passwordError = document.getElementById("passworderror");
+    if(password.length==0){
+        passwordError.innerHTML = "*Please Create Strong Password<br>";
+        passStatus = false;
+    }
+    else{
+        if(password.length < 6 || password.length > 8){
+            passwordError.innerHTML = "*Password must contain minimum 6 maximum 8 characters<br>";
+            passStatus = false;
+        }
+        else{
+            passwordError.innerText = "";
+        }
+    } 
+    return passStatus;
+}
+// username verification
 function usernameVerification(){
     let userStatus = true;
     let username = document.getElementById("userName").value;
@@ -144,6 +207,7 @@ function usernameVerification(){
     }else nameError.innerText="";
     return userStatus;  
 }
+// Email verification 
 function emailVerification(){
     let emailStatus = true;
     let email = document.getElementById("emailID").value;
@@ -167,7 +231,7 @@ function emailVerification(){
             }
         }
         else if(!email.endsWith(".com") && !email.endsWith(".in") && !email.endsWith(".net")){
-            emailError.innerHTML = "*Only .com, .in and .net extensions allowed";
+            emailError.innerHTML = "*Only .com, .in and .net extensions allowed<br>";
             emailStatus = false;
         }
         else{
@@ -176,15 +240,17 @@ function emailVerification(){
     }
     return emailStatus;
 }
+// final submit button 
 function verified(){
     let user = usernameVerification();
     let email = emailVerification();
-    if(user && email) return true;
+    let pass = passwordVerification();
+    let mob = mobileVerification();
+    if(user && email && pass && mob) return true;
     return false;
 }
-function checkUser(){
-    (!localStorage.getItem("user-list") && localStorage.setItem("user-list","[]"));
-}
+
+
 function card_container(data){
     let main = document.getElementById("main");
     let cardContainer = document.createElement("div");
