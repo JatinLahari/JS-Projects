@@ -1,0 +1,6 @@
+
+#Create Photo Gallery with add and delete images. All Images show in tables and in every
+table row only have 5 columns.
+#Create a slider with 10 images in javascript with next and previous button.
+#Create a Calculator with HTML and Javascript without using eval function.
+# Create a StopWatch in HTML and Javascript.
