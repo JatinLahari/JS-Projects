@@ -288,10 +288,6 @@ function signInPage(){
     nameInput.setAttribute("class","form-control text-black");
     nameInput.setAttribute("placeholder","Enter name or email");
     inform.appendChild(nameInput);
-    // let nameError = document.createElement("small");
-    // nameError.setAttribute("id","nameError");
-    // nameError.setAttribute("style","colot:red;");
-    // inform.appendChild(nameError);
 
     let passwordLabel = document.createElement("label");
     passwordLabel.innerHTML = "<b>*Enter Password:</b>";
@@ -318,12 +314,14 @@ function signInPage(){
         let password = passwordInput.value;
         let storedData = JSON.parse(localStorage.getItem("user-list"));
         for(let userData of storedData){
-            if((userData.username!=username || userData.emailID!=username) || userData.psswrd!=password){
+            if((userData.username!=username || userData.emailID!=username) && userData.psswrd!=password){
                 error.innerHTML = "*Wrong Username or Password<br>"
             }
             else{
                 error.innerText = "";
-                
+                alert("Login Successful!");
+                nameInput.value="";
+                passwordInput.value="";
                 break;
             }
         }
