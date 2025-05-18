@@ -32,7 +32,7 @@ function imageslider(){
         showImg(index);
     }
     function previous(){
-        index = (index-1)%imageArray.length;
+        index = (index-1+imageArray.length)%imageArray.length;
         showImg(index);
     }
     // control buttons
